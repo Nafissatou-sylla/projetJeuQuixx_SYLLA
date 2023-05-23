@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Jeu quixx </title>
+    </head>
+    <body>
+        <script>
+        //creation de la grille
+        function genereGrid() {
+            var grille = document.createElement("div");
+            grille.className = "grille";
+            // les 4 1eres lignes
+            for(let i=0; i<4; i++) {
+                let row = document.createElement("div");
+                row.className = "row";
+                for(let j=0; j< 11; j++) {
+                    let button = document.createElement("button");
+                    row.appendChild(button);
+                    grille.appendChild(row);
+
+                    button.addEventListener('click', function() {
+                        //pour empêcher de cliquer sur un button 2 fois
+                        button.disabled = true;
+                        //pour empecher les clicks des boutons précédents
+                        let previous = button.previousSibling;
+                        previous.disabled = true;
+                        while(previous != null) {
+                            previous.disabled = true;
+                            previous = previous.previousSibling;
+                        }
+                    });
+                }
+                
+                //création des bouttons x
+                let button = document.createElement("button");
+                button.className = "buttonX";
+                button.textContent = "x";
+                row.appendChild(button);
+                grille.appendChild(row);
+                document.querySelector("body").appendChild(grille);
+            }
+            
+            // la ligne de pénalites et les cases malus
+            function penalites() {
+                let row = document.createElement("div");
+                row.className = "row";
+                let penalite= document.createElement("button");
+                penalite.className = "penalite";
+                penalite.textContent = "Pénalités";
+                row.appendChild(penalite);
+                for(let i=0; i< 4; i++) {
+                    let malus= document.createElement("button");
+                    malus.className = "malus";
+                    row.appendChild(malus);
+                }
+                grille.appendChild(row);
+            }
+            penalites();
+
+            //la ligne de score 
+            function score(){
+                let row = document.createElement("div");
+                row.className = "row";
+                for(let i=0; i< 6; i++) {
+                    let score = document.createElement("button");
+                    score.className = "score";
+                    score.textContent = "0";
+                    row.appendChild(score);
+                    grille.appendChild(row);
+                }
+            }
+            score();
+
+            //les text des lignes croissantes
+            function textRow1And2() {
+                for(let i=0; i<=12; i+=12) {
+                    let row = document.querySelectorAll(".row > button")[i];
+                    let j = 2;
+                    row.textContent = j;
+                    let next = row.nextElementSibling;
+                    while(next != null && next.textContent != "x"){
+                        next.textContent = j+1;
+                        j++;
+                        next = next.nextSibling;  
+                    }
+                }
+            }
+            textRow1And2();
+
+            //les text des lignes décroissantes
+            function textRow3And4() {
+                for(let i=24; i<=36; i+=12){
+                    let row = document.querySelectorAll(".row > button")[i];
+                    let j = 12;
+                    row.textContent = j;
+                    let next = row.nextSibling;
+                    while(next != null && next.textContent != "x") {
+                        next.textContent = j-1;
+                        j--;
+                        next = next.nextSibling;
+                    }
+                }
+            }
+            textRow3And4();
+    
+            //fonction pour calculer le nombre de clique de chaque lignes
+            var nmbreCliqueRow1 = 0;
+            function nombreCliqueRow1() {
+                let row = document.getElementsByClassName('row')[0];
+                row.addEventListener('click', function() {
+                    if(event.target.innerHTML != 'x') {
+                        nmbreCliqueRow1++;
+                        console.log("nombre click " + nmbreCliqueRow1);
+                    }
+                }); 
+            }
+            nombreCliqueRow1();
+
+            var nmbreCliqueRow2 = 0;
+            function nombreCliqueRow2() {
+                let row = document.getElementsByClassName('row')[1];
+                row.addEventListener('click', function() {
+                    if(event.target.innerHTML != 'x') {
+                        nmbreCliqueRow2++;
+                        console.log("nombre click " + nmbreCliqueRow2);
+                    }
+                }); 
+            }
+            nombreCliqueRow2();
+
+            var nmbreCliqueRow3 = 0;
+            function nombreCliqueRow3() {
+                let row = document.getElementsByClassName('row')[2];
+                row.addEventListener('click', function() {
+                    if(event.target.innerHTML != 'x') {
+                        nmbreCliqueRow3++;
+                        console.log("nombre click " + nmbreCliqueRow3);
+                    }
+                }); 
+            }
+            nombreCliqueRow3();
+
+            var nmbreCliqueRow4 = 0;
+            function nombreCliqueRow4() {
+                let row = document.getElementsByClassName('row')[3];
+                row.addEventListener('click', function() {
+                    if(event.target.innerHTML != 'x') {
+                        nmbreCliqueRow4++;
+                        console.log("nombre click " + nmbreCliqueRow4);
+                    }
+                }); 
+            }
+            nombreCliqueRow4();
+
+            // fonction pour controler le nombre de clique des cases avant la case x pour chaque ligne
+            function clickButtonX1() {
+                let button = document.getElementsByClassName("buttonX")[0];
+                button.addEventListener('click', function() {
+                    if(nmbreCliqueRow1 < 5 ) {
+                        button.disabled = true;
+                        alert('nombre de case coché ligne 1 < 5');
+                    }
+                    button.disabled = false;
+                });
+            }
+            clickButtonX1();
+
+            function clickButtonX2() {
+                let button = document.getElementsByClassName("buttonX")[1];
+                button.addEventListener('click', function() {
+                    if( nmbreCliqueRow2 < 5 ) {
+                        button.disabled = true;
+                        alert('nombre de case coché ligne 2 < 5');
+                    }
+                    button.disabled = false;
+                });
+            }
+            clickButtonX2();
+
+            function clickButtonX3() {
+                let button = document.getElementsByClassName("buttonX")[2];
+                button.addEventListener('click', function() {
+                    if( nmbreCliqueRow3 < 5 ) {
+                        button.disabled = true;
+                        alert('nombre de case coché ligne 3 < 5');
+                    }
+                    button.disabled = false;
+                });
+            }
+            clickButtonX3();
+
+
+            function clickButtonX4() {
+                let button = document.getElementsByClassName("buttonX")[3];
+                button.addEventListener('click', function() {
+                    if( nmbreCliqueRow4 < 5 ) {
+                        button.disabled = true;
+                        alert('nombre de case coché ligne 4 < 5');
+                    }
+                    button.disabled = false;
+                });
+            }
+            clickButtonX4();
+        }
+        genereGrid();
+
+        //calcule du score de chaque ligne
+        function scoreRow1(){
+            var score1 = document.getElementsByClassName('score')[0];
+            let n=0;
+            let row1 = document.getElementsByClassName('row')[0]
+            .addEventListener('click', function(){
+                if(event.target && event.target.textContent != "x"){
+                    n++;
+                    score1.innerHTML =(n*n + n) / 2;
+                }
+            });
+        }
+        scoreRow1();
+
+    
+        function scoreRow2(){
+            var score2 = document.getElementsByClassName('score')[1];
+            let n=0;
+            let row2 = document.getElementsByClassName('row')[1]
+            .addEventListener('click', function(){
+                if(event.target && event.target.textContent != "x"){
+                    n++;
+                    score2.innerHTML =(n*n + n) / 2;
+                }
+            });   
+        }
+        scoreRow2();
+
+    
+        function scoreRow3(){
+            var score3 = document.getElementsByClassName('score')[2];
+            let n=0;
+            let row3 = document.getElementsByClassName('row')[2]
+            .addEventListener('click', function(){
+                if(event.target && event.target.textContent != "x"){
+                    n++;
+                    score3.innerHTML =(n*n + n) / 2;
+                }
+            }); 
+        }
+        scoreRow3();
+
+    
+        function scoreRow4(){
+            var score4 = document.getElementsByClassName('score')[3];
+            let n=0;
+            let row4 = document.getElementsByClassName('row')[3]
+            .addEventListener('click', function(){
+                if(event.target && event.target.textContent != "x"){
+                    n++;
+                    score4.innerHTML =(n*n + n) / 2;
+                }
+            }); 
+        }
+        scoreRow4();
+
+    
+        function scoreRow5(){
+            var score5 = document.getElementsByClassName('score')[4];
+            let n=0;
+            let row5 = document.querySelectorAll('button.malus');
+            let nmbreClique = 0;
+            for(let i=0; i<row5.length; i++){
+                row5[i].addEventListener('click', function(){
+                    if(event.target && event.target.textContent != "x"){
+                        n = n-5;
+                        score5.innerHTML = n;
+                        nmbreClique++;
+                        //pour empecher de cliquer sur le bouton 2 fois
+                        row5[i].disabled = true;
+                    }
+                }); 
+            }
+        }
+        scoreRow5();
+
+        // calcule du score total
+        //à la fin du jeu, le joueur coche chaque case de la ligne de score pour cumuler les points obtenus 
+
+    
+        function scoreTotal(){
+            var scoreTotal = document.getElementsByClassName('score')[5];
+            let score1 = document.querySelectorAll(".score")[0];
+            score1.addEventListener('click', function(){
+                var scorefinal1 = parseInt(score1.textContent);
+                scoreTotal.innerHTML =scorefinal1;
+                 score1.disabled = true;
+            }); 
+
+            let score2 = document.querySelectorAll(".score")[1];
+            score2.addEventListener('click', function(){
+                var scorefinal2 = parseInt(score2.textContent) + parseInt(scoreTotal.textContent);
+                scoreTotal.innerHTML = scorefinal2;
+                score2.disabled = true;
+            }); 
+
+            let score3 = document.querySelectorAll(".score")[2];
+            score3.addEventListener('click', function(){
+                var scorefinal3 = parseInt(score3.textContent) + parseInt(scoreTotal.textContent);
+                scoreTotal.innerHTML = scorefinal3;
+                score3.disabled = true;
+            }); 
+
+            let score4 = document.querySelectorAll(".score")[3];
+            score4.addEventListener('click', function(){
+                var scorefinal4 = parseInt(score4.textContent) + parseInt(scoreTotal.textContent);
+                scoreTotal.innerHTML = scorefinal4;
+                score4.disabled = true;  
+            }); 
+
+            let score5 = document.querySelectorAll(".score")[4];
+            score5.addEventListener('click', function(){
+                var scorefinal5 = parseInt(score5.textContent) + parseInt(scoreTotal.textContent);
+                scoreTotal.innerHTML = scorefinal5;
+                score5.disabled = true;
+            }); 
+        }
+        scoreTotal();
+        </script>
+    </body>
+</html>

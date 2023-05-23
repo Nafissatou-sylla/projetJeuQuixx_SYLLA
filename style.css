@@ -1,0 +1,77 @@
+.grille {
+    display: grid;
+    width: 70em;
+    height: 250px;
+    margin-left: 15em;
+    margin-top: 2em;
+    }
+    
+    .row{
+    width: 51em;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    }
+    
+    .grille > .row > button, .score {
+      width: 50em;
+      height: 80px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      margin: 5px;
+      justify-content: center;
+      justify-items: center;
+      color: white;
+      position: relative;
+      font-size: 2em; 
+    }
+
+
+    .grille > .row > .score {
+      border: 1px black solid;
+      background-color: white;
+      color: red;
+    }
+    
+    .grille > .row:nth-child(1) > button{
+       background-color: rgb(240, 132, 150);
+    } 
+    
+    .grille > .row:nth-child(2) > button{
+        background-color: rgba(207, 236, 61, 0.83);
+     } 
+    
+     .grille > .row:nth-child(3) > button{
+        background-color: rgb(14, 251, 49);
+        
+     } 
+    
+     .grille > .row:nth-child(4) > button{
+        background-color: rgb(164, 232, 254);
+     } 
+    
+    .grille > .row > .penalite {
+        width: 66em;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        color: black;
+        justify-content: center;
+        position: relative;
+        margin-top: 5px;
+        margin-left: 5px;
+        font-size: 2em;
+    }
+    
+    .grille > .row > .malus{
+        width: 200px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 5px;
+        background-color: rgba(179, 171, 171, 0.89);
+    }
